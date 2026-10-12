@@ -1,4 +1,4 @@
-package main.java.icc.pap.u01;
+package icc.pap.u01;
 
 public class TiposDemo {
     public static void main(String[] args) {

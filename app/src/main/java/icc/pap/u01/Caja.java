@@ -1,4 +1,6 @@
-package main.java.icc.pap.u01;
+package icc.pap.u01;
+
+import java.util.function.Function;
 
 //CLASE GENERICA 
 public class Caja<T> {
@@ -10,9 +12,16 @@ public class Caja<T> {
         this.valor = valor;
     }
 
-    // METODO
+    // METODO GENRICO
     public T obtener() {
         return valor;
+    }
+
+    // METODO GENERICO QUE RECIBE UNA FUNCION Y DEVUELVE EL RESULTADO DE APLICAR ESA
+    // FUNCION AL VALOR DE LA CAJA
+    public <R> R mapear(Function<T, R> operacion) {
+        R resultado = operacion.apply(valor);
+        return resultado;
     }
 
 }
