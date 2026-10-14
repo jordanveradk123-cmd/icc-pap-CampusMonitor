@@ -4,6 +4,7 @@
 package icc.pap.campusmonitor;
 
 import icc.pap.Models.Lectura;
+import icc.pap.Models.Reporte;
 
 public class App {
     public String getGreeting() {
@@ -11,7 +12,64 @@ public class App {
     }
 
     public static void main(String[] args) {
-        runlectura();
+        // runlectura();
+        runTransformaciones();
+        runTransformaciones2();
+
+    }
+
+    private static void runTransformaciones2() {
+        Lectura<Double> temperatura = new Lectura<>("S01", 22.5, "°C");
+        // Lectura<Reporte>reporte = new Reporte("S01", temperatura.getValor(),
+        // temperatura.getUnidad());
+
+        Lectura<Reporte> reporte = temperatura.transformar(c -> new Reporte(
+                temperatura.getIdSensor(), c, temperatura.getUnidad()), "Reporte");
+
+        System.out.println("Reporte generado: " + reporte.getIdSensor() + " | " + reporte.getValor() + " | "
+                + reporte.getUnidad());
+
+    }
+
+    private static void runTransformaciones() {
+
+        // Tomo los valores originales de la anterior practica
+        Lectura<Double> temperatura = new Lectura<>("S01", 22.5, "°C");
+        Lectura<Integer> lectura1 = new Lectura<>("S02", 18, "personas");
+
+        // Convertir la temperatura a Fahrenheit F = C * 9.0 / 5.0 + 32 y obténer
+        // Lectura<Double> con unidad °F
+        Lectura<Double> temperaturaFahrenheit = temperatura.transformar(c -> c * 9.0 / 5.0 + 32, "°F");
+
+        // Transformar el valor de ocupación en texto 18 personas para obtener
+        // Lectura<String> con unidad "texto" sin cast
+        Lectura<String> ocupacionTexto = lectura1.transformar(v -> v + " personas", "texto");
+
+        // Muestra los originales y los resultados.
+        System.out.println("Original: " + temperatura.getIdSensor() + " | " + temperatura.getValor() + " "
+                + temperatura.getUnidad());
+        System.out.println("Transformada: " + temperaturaFahrenheit.getIdSensor() + " | "
+                + temperaturaFahrenheit.getValor() + " " + temperaturaFahrenheit.getUnidad());
+
+        System.out.println(
+                "Original: " + lectura1.getIdSensor() + " | " + lectura1.getValor() + " " + lectura1.getUnidad());
+        System.out.println("Transformada: " + ocupacionTexto.getIdSensor() + " | " + ocupacionTexto.getValor()
+                + " | unidad: " + ocupacionTexto.getUnidad());
+
+        // Comprueba el conversor nulo, resultado nulo y unidad vacía capturando
+        // excepciones
+        System.out.println("\n--- Pruebas de excepciones ---");
+        try {
+            temperatura.transformar(null, "°F");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Excepción capturada el conversor es nulo: " + e.getMessage());
+        }
+
+        try {
+            temperatura.transformar(c -> null, "°F");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Excepción capturada el resultado es nulo): " + e.getMessage());
+        }
     }
 
     private static void runlectura() {
@@ -21,6 +79,7 @@ public class App {
         System.out.println("Lecturas de CampusMonitor");
         System.out.println(temperatura.getIdSensor() + " | " + temperatura.getValor() + " " + temperatura.getUnidad());
         System.out.println(lectura1.getIdSensor() + " | " + lectura1.getValor() + " " + lectura1.getUnidad());
+        System.out.println();
 
         System.out.println("Valores recuperados sin casting:");
         System.out.println("Temperatura: " + temperatura.getValor());

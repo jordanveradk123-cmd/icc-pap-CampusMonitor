@@ -1,13 +1,18 @@
 1.Implementacion Realizada
 
 
-Que representa la clase Lectura<T>.
+.Que representa la clase Lectura<T>.
+
+
 Es una clase que va a utilizar un atributo generico, que tiene 3 atributos 2 de tipo String y un tipo generico que quiere decir esto, que puede tomar cualquier forma que en este caso se le denomino valor.
 
-Qué representa T y por qué permite utilizar la misma clase para temperatura y ocupación.
+.Qué representa T y por qué permite utilizar la misma clase para temperatura y ocupación.
+
+
 Es un valor generico se le podra dar cualquier valor o forma como antes dicho esto hace que a T se le pueda utilizar en diferentes aspectos es decir la clase es la misma pero los datos arrojados en consola son diferentes porque el uno es temperatura y el otro es Ocupacion casi como una funcion.
 
-Qué agregaste en App.java.
+
+.Qué agregaste en App.java.
 
 en el main agrege un runLectura 
  private static void runlectura() {
